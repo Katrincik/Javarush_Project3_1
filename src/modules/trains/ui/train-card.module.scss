@@ -1,0 +1,88 @@
+.trainCard {
+  p {
+    font-weight: 500;
+  }
+
+  .mainInfo {
+    margin: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
+
+  .departureInfo {
+    p {
+      margin: 0;
+    }
+  }
+
+  .duration {
+    text-align: center;
+    margin: 0;
+    color: #a0d911;
+  }
+
+  .arrivalInfo {
+    justify-self: right;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .date {
+    font-weight: 700;
+  }
+
+  .ticketClassesContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .ticketClass {
+    padding: 24px 16px;
+    border-radius: 10px;
+    background-color: #f0f5ff;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    cursor: pointer;
+
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: #cfd3e0;
+    }
+
+    .rightColumn {
+      justify-self: right;
+      text-align: right;
+    }
+  }
+
+  .ticketClass.first {
+    background-color: #e6fffb;
+
+    &:hover {
+      background-color: #c6e7e2;
+    }
+  }
+
+  .ticketClass.second {
+    background-color: #fff0f6;
+
+    &:hover {
+      background-color: #ebd6df;
+    }
+  }
+
+  .ticketClass.third {
+    background-color: #fffbe6;
+
+    &:hover {
+      background-color: #e7e3cc;
+    }
+  }
+}
