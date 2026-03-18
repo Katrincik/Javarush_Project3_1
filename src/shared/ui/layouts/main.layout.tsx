@@ -59,8 +59,43 @@ function MainLayout() {
                     <Outlet />
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>
-                ©2025 RailWay. All rights reserved
+
+            <Footer className={classes.footer}>
+                <div className={classes.footerInner}>
+                    <div className={classes.brand}>
+                        <img style={{ height: '51px'}} src={railwayLogo} alt="Railway Logo"/>
+                    </div>
+                    <div className={classes.columns}>
+                        <div className={classes.column}>
+                            <div className={classes.columnTitle}>About</div>
+                            <div className={classes.columnsLink}>
+                                <a className={classes.link} href="#">How it works</a>
+                                <a className={classes.link} href="#">Featured</a>
+                                <a className={classes.link} href="#">Partnership</a>
+                                <a className={classes.link} href="#">Business Relation</a>
+                            </div>
+                        </div>
+                        <div className={classes.column}>
+                            <div className={classes.columnTitle}>Community</div>
+                            <div className={classes.columnsLink}>
+                                <a className={classes.link} href="#">Events</a>
+                                <a className={classes.link} href="#">Blog</a>
+                                <a className={classes.link} href="#">Podcast</a>
+                                <a className={classes.link} href="#">Invite a friend</a>
+                            </div>
+                        </div>
+                        <div className={classes.column}>
+                            <div className={classes.columnTitle}>Socials</div>
+                            <div className={classes.columnsLink}>
+                                <a className={classes.link} href="#">Discord</a>
+                                <a className={classes.link} href="#">Instagram</a>
+                                <a className={classes.link} href="#">Twitter</a>
+                                <a className={classes.link} href="#">Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={classes.copy}>©2025 RailWay. All rights reserved</div>
             </Footer>
         </Layout>
     );
