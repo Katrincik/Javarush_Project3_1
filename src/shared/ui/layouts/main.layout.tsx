@@ -60,7 +60,7 @@ function MainLayout() {
                 </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
-                Railway Express ©{new Date().getFullYear()} Created by Aleksei, Jaana, Konstantin and Veronika
+                ©2025 RailWay. All rights reserved
             </Footer>
         </Layout>
     );
