@@ -159,11 +159,10 @@ export const BookingProvider = ({ children }: { children: JSX.Element }) => {
     }, [bookingInfo.billDetails.discount, bookingInfo.billDetails.totalAmount])
 
     return (
-        <BookingContext value={{bookingInfo, setBookingInfo, addExtraBaggage, removeExtraBaggage, changePromocode}}>
+        <BookingContext.Provider value={{bookingInfo, setBookingInfo, addExtraBaggage, removeExtraBaggage, changePromocode}}>
             {children}
-        </BookingContext>
+        </BookingContext.Provider>
     )
 }
 
 export default BookingContext;
-
