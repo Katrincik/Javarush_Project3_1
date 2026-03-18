@@ -1,3 +1,11 @@
+.pageFonts {
+  font-family: 'Poppins', sans-serif;
+}
+
+:global(body) {
+  font-family: 'Poppins', sans-serif;
+}
+
 .homePageContainer {
     max-width: 640px;
     margin-inline: auto;
@@ -61,7 +69,7 @@
   margin-inline: auto;
 
   .title {
-    color: #1d39c4;
+    color: #5E4AE3;
     margin-bottom: 32px;
   }
 
