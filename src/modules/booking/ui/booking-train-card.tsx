@@ -1,4 +1,5 @@
 import {Card} from "antd";
+import type {ReactNode} from "react";
 import classes from './booking.module.scss'
 
 interface BookingTrainCardProps {
@@ -13,6 +14,7 @@ interface BookingTrainCardProps {
     arrivalTime: string;
     toStation: string;
     duration: string;
+    children?: ReactNode;
 }
 
 function BookingTrainCard(props: BookingTrainCardProps) {
@@ -36,6 +38,12 @@ function BookingTrainCard(props: BookingTrainCardProps) {
                     <p>{props.toStation}</p>
                 </div>
             </div>
+
+            {props.children && (
+                <div style={{ marginTop: 16 }}>
+                    {props.children}
+                </div>
+            )}
         </Card>
     );
 }
