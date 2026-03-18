@@ -11,12 +11,14 @@ import BookingPassengerCard, {
 } from "../modules/booking/ui/booking-passenger-card.tsx";
 import BookingFoodCard from "../modules/booking/ui/booking-food-card.tsx";
 import {TagsFilled} from "@ant-design/icons";
+import {useNavigate} from "react-router";
 
 dayjs.extend(customParseFormat);
 
 const { Title } = Typography;
 
 function ReviewBookingPage() {
+    const navigate = useNavigate();
     const { bookingInfo, setBookingInfo, addExtraBaggage, removeExtraBaggage, changePromocode } = useContext(BookingContext)
     const foodData = bookingInfo.foodData
     const passengerFormRefs = useRef<(BookingPassengerCardRef | null)[]>([]);
@@ -82,6 +84,7 @@ function ReviewBookingPage() {
                 ...prev,
                 passengersData: passengersData
             }))
+            navigate('/payment')
         }
         catch { /* empty */ }
     }
