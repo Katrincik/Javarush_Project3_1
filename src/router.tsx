@@ -3,6 +3,7 @@ import MainLayout from "./shared/ui/layouts/main.layout.tsx";
 import HomePage from "./pages/home.page.tsx";
 import SearchResultsPage from "./pages/search-results.page.tsx";
 import ReviewBookingPage from "./pages/review-booking.page.tsx";
+import PaymentPage from "./pages/payment.page.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: 'review-booking',
                 element: <ReviewBookingPage/>
+            },
+            {
+                path: 'payment',
+                element: <PaymentPage/>
             }
         ]
     },
