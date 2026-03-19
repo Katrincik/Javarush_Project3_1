@@ -5,7 +5,7 @@ import {getStationNameByCode, getTripVariantName} from "../shared/utils.ts";
 import dayjs from "dayjs";
 import classes from './page.module.scss'
 import TrainCard from "../modules/trains/ui/train-card.tsx";
-import trainMockData, {type Train, type TrainClass} from "../shared/constants/train-mock.data.ts";
+import {type Train, type TrainClass} from "../shared/constants/train-mock.data.ts";
 import BookingContext from "../modules/booking/context/booking-context.tsx";
 
 const { Title } = Typography
@@ -66,44 +66,63 @@ function SearchResultsPage() {
         formatDate()
     }, [date, formatDate]);
 
-    const filteredTrainMockData = useMemo(() => {
-        let filtered = trainMockData.filter(t => (
-            t.from.code === departure
-            &&
-            t.to.code === arrival
-        ));
+    const fromStationName = departure ? getStationNameByCode(departure) : 'Unknown';
+    const toStationName = arrival ? getStationNameByCode(arrival) : 'Unknown';
 
-        // Фильтрация по дате отправления
-        if (date && date.length >= 1) {
-            const searchDepartureDate = dayjs(date[0]);
-
-
-            filtered = filtered.filter(t => {
-                // Парсим дату из формата "29 Dec"
-                const trainDate = dayjs(t.from.date, 'DD MMM');
-
-                // Сравниваем только день (date()) и месяц (month())
-                return trainDate.date() === searchDepartureDate.date() &&
-                    trainDate.month() === searchDepartureDate.month();
-            });
+    const promoCards = [
+        {
+            id: 'holidays',
+            text: 'Planning your holidays →',
+            bg: 'src/assets/images/ocean-sky-caribbean-paradise-holiday.jpg'
+        },
+        {
+            id: 'packages',
+            text: 'Train tourism packages →',
+            bg: 'src/assets/images/indian-railways.png'
         }
+    ];
 
-        // Для round trip - дополнительная фильтрация по дате возврата
-        if (date && date.length === 2 && tripVariant === 'roundTrip') {
-            const searchReturnDate = dayjs(date[1]);
-
-            filtered = filtered.filter(t => {
-                // Парсим дату прибытия
-                const trainArrivalDate = dayjs(t.to.date, 'DD MMM');
-
-                // Проверяем, что поезд прибывает не позже указанной даты возврата
-                return trainArrivalDate.isBefore(searchReturnDate) ||
-                    trainArrivalDate.isSame(searchReturnDate, 'day');
-            });
-        }
-
-        return filtered;
-    }, [arrival, departure, date, tripVariant]);
+    const designTrains: Train[] = useMemo(() => ([
+        {
+            id: 1001,
+            trainNumber: "22426",
+            trainName: "VANDE BHARAT",
+            from: { station: fromStationName, code: departure || "", time: "11:25 pm", date: "Nov 16" },
+            to: { station: toStationName, code: arrival || "", time: "7:25 am", date: "Nov 17" },
+            duration: "8 hours",
+            classes: [
+                { classCode: "3A", className: "Third AC", availability: { type: "available", count: 46 }, fareType: "Tatkal", price: 800 },
+                { classCode: "2A", className: "Second AC", availability: { type: "available", count: 6 }, fareType: "Tatkal", price: 1000 },
+                { classCode: "1A", className: "First AC", availability: { type: "waitlist", position: 36 }, fareType: "Tatkal", price: 1200 },
+            ],
+        },
+        {
+            id: 1002,
+            trainNumber: "22412",
+            trainName: "ARUNACHAL EXP",
+            from: { station: fromStationName, code: departure || "", time: "11:45 pm", date: "Nov 16" },
+            to: { station: toStationName, code: arrival || "", time: "7:45 am", date: "Nov 17" },
+            duration: "8 hours",
+            classes: [
+                { classCode: "3A", className: "Third AC", availability: { type: "available", count: 446 }, fareType: "Tatkal", price: 800 },
+                { classCode: "2A", className: "Second AC", availability: { type: "available", count: 166 }, fareType: "Tatkal", price: 1000 },
+                { classCode: "1A", className: "First AC", availability: { type: "waitlist", position: 6 }, fareType: "Tatkal", price: 1400 },
+            ],
+        },
+        {
+            id: 1003,
+            trainNumber: "12572",
+            trainName: "SHATABDI EXPRESS",
+            from: { station: fromStationName, code: departure || "", time: "11:50 pm", date: "Nov 16" },
+            to: { station: toStationName, code: arrival || "", time: "9:50 am", date: "Nov 17" },
+            duration: "10 hours",
+            classes: [
+                { classCode: "3A", className: "Third AC", availability: { type: "available", count: 446 }, fareType: "Tatkal", price: 800 },
+                { classCode: "2A", className: "Second AC", availability: { type: "available", count: 166 }, fareType: "Tatkal", price: 1000 },
+                { classCode: "1A", className: "First AC", availability: { type: "waitlist", position: 6 }, fareType: "Tatkal", price: 1400 },
+            ],
+        },
+    ]), [fromStationName, toStationName, arrival, departure]);
 
     const items: DescriptionsProps['items'] = useMemo(() => (
         [
@@ -165,30 +184,41 @@ function SearchResultsPage() {
     return (
         <div className={classes.searchResultsContainer}>
             <Descriptions className={classes.descriptions} styles={styles} title="Search results" layout="vertical" items={items} column={4} />
+            <div className={classes.promoContainer}>
+                {promoCards.map(card => (
+                    <div
+                        key={card.id}
+                        className={classes.promoCard}
+                        style={{ backgroundImage: `url(${card.bg})` }}
+                    >
+                        <a href='#' style={{color: 'white', zIndex: 1}}>{card.text}</a>
+                    </div>
+                ))}
+                <div className={classes.promoText}>
+                    Our trains don't just transport people, they transport emotions and stories! From the mountains of Darjeeling to the beaches of Goa, we connect more than just stations. As Raj Koothrappali would say, "In India, we don't just ride trains, we experience cosmic journeys with occasional cow delays." Book now and embrace the colorful chaos!
+                </div>
+            </div>
             <Title className={classes.title}>Available Trains</Title>
-            <Flex className={classes.trainsCardsContainer} vertical gap={24}>
-                {filteredTrainMockData.length < 1 ? (
-                    <h2>No trains available</h2>
-                ) : (
-                    filteredTrainMockData.map((t) => (
-                        <TrainCard
-                            title={`${t.trainNumber} - ${t.trainName}`}
-                            departure={{
-                                date: t.from.date,
-                                time: t.from.time,
-                                station: t.from.station
-                            }}
-                            arrival={{
-                                date: t.to.date,
-                                time: t.to.time,
-                                station: t.to.station
-                            }}
-                            duration={t.duration}
-                            ticketClasses={t.classes}
-                            onClickCard={(trainClass) => goToReviewBookingPage(trainClass, t)}
-                        />
-                    ))
-                )}
+            <Flex className={classes.trainsCardsContainer} vertical gap={32}>
+                {designTrains.map((t) => (
+                    <TrainCard
+                        key={t.id}
+                        title={`${t.trainNumber} - ${t.trainName}`}
+                        departure={{
+                            date: t.from.date,
+                            time: t.from.time,
+                            station: t.from.station
+                        }}
+                        arrival={{
+                            date: t.to.date,
+                            time: t.to.time,
+                            station: t.to.station
+                        }}
+                        duration={t.duration}
+                        ticketClasses={t.classes}
+                        onClickCard={(trainClass) => goToReviewBookingPage(trainClass, t)}
+                    />
+                ))}
             </Flex>
         </div>
     );
