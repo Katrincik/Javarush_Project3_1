@@ -56,11 +56,45 @@
 
   .title {
     color: #08979c;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
 
   .descriptions {
-    margin-bottom: 100px;
+    margin-bottom: 60px;
+  }
+
+  .promoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 60px;
+
+    .promoText {
+      font-size: 12px;
+      color: rgb(1, 4, 0, 0.5);
+    }
+  }
+
+  .promoCard {
+    position: relative;
+    border-radius: 10px;
+    min-height: 150px;
+    padding: 60px 25px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 20px;
+    background-size: cover;
+    background-position: center;
+
+
+    &:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0) 100%);
+    }
   }
 }
 
@@ -119,4 +153,8 @@
   .discount {
     font-weight: 600;
   }
+}
+
+:global(.ant-card .ant-card-body) {
+  padding: 32px 24px !important;
 }
