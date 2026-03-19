@@ -207,7 +207,7 @@ function PaymentPage() {
                         Discounts, offers and price concessions will be applied later during payment
                     </Text>
 
-                    <Button type="primary" size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}}>Book Now</Button>
+                    <Button type="primary" size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}} onClick={() => navigate('/success')}>Book Now</Button>
                     <Button danger ghost size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}} onClick={() => navigate(-1)}>Cancel</Button>
                 </Flex>
             </Card>
