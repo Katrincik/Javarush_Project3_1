@@ -15,7 +15,7 @@ import {useNavigate} from "react-router";
 
 dayjs.extend(customParseFormat);
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function ReviewBookingPage() {
     const navigate = useNavigate();
@@ -28,6 +28,11 @@ function ReviewBookingPage() {
     const selectedClass = useMemo(() => {
         return bookingInfo.selectedTrain?.classes.find(t => t.classCode === bookingInfo.selectedClassCode)
     }, [bookingInfo.selectedTrain, bookingInfo.selectedClassCode])
+    const passengersCount = bookingInfo.passengers ?? 1;
+    const baseFareTotal = (bookingInfo.billDetails.baseTicketFare ?? 0) * passengersCount;
+    const cgstTotal = (bookingInfo.billDetails.cgst ?? 0) * passengersCount;
+    const baseFareLabel = passengersCount > 1 ? `Base Ticket Fare x${passengersCount}` : 'Base Ticket Fare';
+    const cgstLabel = passengersCount > 1 ? `CGST & SGST x${passengersCount}` : 'CGST & SGST';
 
     const { departureDate, departureTime, arrivalDate, arrivalTime } = useMemo(() => {
         if (!bookingInfo.selectedTrain) return {};
@@ -201,12 +206,12 @@ function ReviewBookingPage() {
             <Card className={classes.billDetailsCard}>
                 <h2>Bill details</h2>
                 <div style={{ marginBottom: 16 }}>
-                    <Flex justify="space-between" align="center"><span>Base Ticket Fare</span> <span>₹{bookingInfo.billDetails.baseTicketFare}</span></Flex>
+                    <Flex justify="space-between" align="center"><span>{baseFareLabel}</span> <span>₹{baseFareTotal}</span></Flex>
                     {bookingInfo.billDetails.foodCharges?.map(f => (
                         <Flex justify="space-between" align="center"><span>{f.name}</span> <span>₹{f.price}</span></Flex>
                     ))}
                     {bookingInfo.hasExtraBaggage && <Flex justify="space-between" align="center"><span>Extra Baggage</span> <span>₹{bookingInfo.billDetails.extraBaggage}</span></Flex>}
-                    <Flex justify="space-between" align="center"><span>CGST & SGST</span> <span>₹{bookingInfo.billDetails.cgst}</span></Flex>
+                    <Flex justify="space-between" align="center"><span>{cgstLabel}</span> <span>₹{cgstTotal}</span></Flex>
                     {bookingInfo.billDetails.discount && <Flex justify="space-between" align="center"><span>Discount</span> <span className={classes.discount}>- ₹{bookingInfo.billDetails.discount}</span></Flex>}
                 </div>
 
@@ -216,8 +221,19 @@ function ReviewBookingPage() {
                 </Flex>
             </Card>
 
-            <Flex vertical gap={16} wrap style={{ marginTop: 48 }}>
-                <Button block color="primary" variant="solid" size="large" onClick={handleSubmit}>Book now</Button>
+            <Flex vertical align="center" justify="center" gap={16} style={{ marginTop: 16 }}>
+                <Text type="secondary" style={{ fontWeight: 500, fontSize: 12, color: 'rgba(1, 4, 0, 0.5)' }}>
+                    Discounts, offers and price concessions will be applied later during payment
+                </Text>
+
+                <Button type="primary" variant="solid" size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}} onClick={handleSubmit}>Book Now</Button>
+                <Button danger ghost size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}} onClick={() => navigate(-1)}>Cancel</Button>
+            </Flex>
+
+            <Flex justify="center" gap={30} wrap style={{ marginTop: 24, marginBottom: 24, fontWeight: 500, fontSize: 14, color: 'rgba(1, 0, 4, 0.5)' }}>
+                <span>Cancellation Policy</span>
+                <span>Terms & Conditions</span>
+                <span>Travel Insurance</span>
             </Flex>
         </div>
     );
