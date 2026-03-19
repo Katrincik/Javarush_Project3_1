@@ -158,3 +158,36 @@
 :global(.ant-card .ant-card-body) {
   padding: 32px 24px !important;
 }
+
+.successContainer {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.successTitle {
+  text-align: center;
+}
+
+.qrImage {
+  width: 220px;
+  height: 220px;
+}
+
+.travellerBlock {
+  text-align: left;
+  margin-bottom: 10px;
+
+  .travellerMeta {
+    color: rgba(1, 0, 4, 0.5);
+    font-size: 16px;
+  }
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+
