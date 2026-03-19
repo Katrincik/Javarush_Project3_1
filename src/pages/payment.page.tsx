@@ -5,10 +5,12 @@ import BookingContext from "../modules/booking/context/booking-context.tsx";
 import BookingTrainCard from "../modules/booking/ui/booking-train-card.tsx";
 import dayjs from "dayjs";
 import {SafetyCertificateOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router";
 
 const { Title, Text } = Typography;
 
 function PaymentPage() {
+    const navigate = useNavigate();
     const { bookingInfo } = useContext(BookingContext);
     const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal' | 'bitcoin' | undefined>(undefined);
 
@@ -40,6 +42,11 @@ function PaymentPage() {
     const addedFood = bookingInfo.foodData?.filter(f => f.isAdded) ?? [];
     const contactEmail = travellerDetails[0]?.email ?? 'Not provided';
     const totalCharge = bookingInfo.billDetails.totalAmountWithDiscount ?? 0;
+    const passengersCount = bookingInfo.passengers ?? 1;
+    const baseFareTotal = (bookingInfo.billDetails.baseTicketFare ?? 0) * passengersCount;
+    const cgstTotal = (bookingInfo.billDetails.cgst ?? 0) * passengersCount;
+    const baseFareLabel = passengersCount > 1 ? `Base Ticket Fare x${passengersCount}` : 'Base Ticket Fare';
+    const cgstLabel = passengersCount > 1 ? `CGST & SGST x${passengersCount}` : 'CGST & SGST';
 
     return (
         <div className={classes.reviewBookingContainer}>
@@ -105,12 +112,12 @@ function PaymentPage() {
             <Card className={classes.billDetailsCard} style={{ marginBottom: 24 }}>
                 <h2>Bill details</h2>
                 <div style={{ marginBottom: 16 }}>
-                    <Flex justify="space-between" align="center"><span>Base Ticket Fare</span> <span>₹{bookingInfo.billDetails.baseTicketFare ?? 0}</span></Flex>
+                    <Flex justify="space-between" align="center"><span>{baseFareLabel}</span> <span>₹{baseFareTotal}</span></Flex>
                     {bookingInfo.billDetails.foodCharges?.map(f => (
                         <Flex key={f.id} justify="space-between" align="center"><span>{f.name}</span> <span>₹{f.price}</span></Flex>
                     ))}
                     {bookingInfo.hasExtraBaggage && <Flex justify="space-between" align="center"><span>Extra Baggage</span> <span>₹{bookingInfo.billDetails.extraBaggage}</span></Flex>}
-                    <Flex justify="space-between" align="center"><span>CGST & SGST</span> <span>₹{bookingInfo.billDetails.cgst}</span></Flex>
+                    <Flex justify="space-between" align="center"><span>{cgstLabel}</span> <span>₹{cgstTotal}</span></Flex>
                     {bookingInfo.billDetails.discount && <Flex justify="space-between" align="center"><span>Discount</span> <span className={classes.discount}>- ₹{bookingInfo.billDetails.discount}</span></Flex>}
                 </div>
 
@@ -120,7 +127,7 @@ function PaymentPage() {
                 </Flex>
             </Card>
 
-            <Card style={{ marginBottom: 24 }}>
+            <Card style={{ marginBottom: 32 }}>
                 <Title level={3} style={{ margin: 0, color: '#111827' }}>Payment Method</Title>
                 <Text type="secondary">Please enter your payment method</Text>
 
@@ -201,9 +208,16 @@ function PaymentPage() {
                     </Text>
 
                     <Button type="primary" size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}}>Book Now</Button>
-                    <Button danger ghost size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}}>Cancel</Button>
+                    <Button danger ghost size="large" block style={{minHeight: 54, minWidth: 400, width: 'auto'}} onClick={() => navigate(-1)}>Cancel</Button>
                 </Flex>
             </Card>
+
+            <Flex justify="center" gap={30} wrap style={{ marginBottom: 66, fontWeight: 500, fontSize: 14, color: 'rgba(1, 0, 4, 0.5)'}}>
+                <span>Cancellation Policy</span>
+                <span>Terms & Conditions</span>
+                <span>Travel Insurance</span>
+            </Flex>
+
         </div>
     );
 }
