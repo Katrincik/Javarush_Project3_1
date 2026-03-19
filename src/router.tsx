@@ -4,6 +4,7 @@ import HomePage from "./pages/home.page.tsx";
 import SearchResultsPage from "./pages/search-results.page.tsx";
 import ReviewBookingPage from "./pages/review-booking.page.tsx";
 import PaymentPage from "./pages/payment.page.tsx";
+import SuccessPage from "./pages/success.page.tsx";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: 'payment',
                 element: <PaymentPage/>
+            },
+            {
+                path: 'success',
+                element: <SuccessPage/>
             }
         ]
     },
