@@ -15,15 +15,30 @@ interface BookingTrainCardProps {
     toStation: string;
     duration: string;
     children?: ReactNode;
+    hideTitle?: boolean;
+    pnr?: string;
+    transactionId?: string;
+    successVariant?: boolean;
+    hideClassLine?: boolean;
 }
 
 function BookingTrainCard(props: BookingTrainCardProps) {
+    const cardClass = props.successVariant
+        ? `${classes.trainCard} ${classes.successVariant}`
+        : classes.trainCard;
+
     return (
-        <Card className={classes.trainCard}>
-            <h2>Boarding Details</h2>
+        <Card className={cardClass}>
+            {(props.pnr || props.transactionId) && (
+                <div className={classes.metaRow}>
+                    {props.pnr && <span>PNR No: {props.pnr}</span>}
+                    {props.transactionId && <span>Transaction ID : {props.transactionId}</span>}
+                </div>
+            )}
+            {!props.hideTitle && <h2>Boarding Details</h2>}
             <div className={classes.nameAndClass}>
                 <h3>{props.trainNumber} - {props.trainName}</h3>
-                <h4>Class {props.classCode} & {props.fareType} Quota</h4>
+                {!props.hideClassLine && <h4>Class {props.classCode} & {props.fareType} Quota</h4>}
             </div>
             <div className={classes.mainInfo}>
                 <div>
@@ -40,7 +55,7 @@ function BookingTrainCard(props: BookingTrainCardProps) {
             </div>
 
             {props.children && (
-                <div style={{ marginTop: 16 }}>
+                <div style={{ marginTop: 16, fontSize: 16 }}>
                     {props.children}
                 </div>
             )}
