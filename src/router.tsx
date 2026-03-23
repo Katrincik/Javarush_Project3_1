@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router";
+import {createHashRouter} from "react-router";
 import MainLayout from "./shared/ui/layouts/main.layout.tsx";
 import HomePage from "./pages/home.page.tsx";
 import SearchResultsPage from "./pages/search-results.page.tsx";
@@ -6,7 +6,7 @@ import ReviewBookingPage from "./pages/review-booking.page.tsx";
 import PaymentPage from "./pages/payment.page.tsx";
 import SuccessPage from "./pages/success.page.tsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: "/",
         element: <MainLayout/>,
