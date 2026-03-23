@@ -7,6 +7,8 @@ import classes from './page.module.scss'
 import TrainCard from "../modules/trains/ui/train-card.tsx";
 import {type Train, type TrainClass} from "../shared/constants/train-mock.data.ts";
 import BookingContext from "../modules/booking/context/booking-context.tsx";
+import promoOcean from "../assets/images/ocean-sky-caribbean-paradise-holiday.jpg";
+import promoTrain from "../assets/images/indian-railways.png";
 
 const { Title } = Typography
 
@@ -73,12 +75,12 @@ function SearchResultsPage() {
         {
             id: 'holidays',
             text: 'Planning your holidays →',
-            bg: 'src/assets/images/ocean-sky-caribbean-paradise-holiday.jpg'
+            bg: promoOcean
         },
         {
             id: 'packages',
             text: 'Train tourism packages →',
-            bg: 'src/assets/images/indian-railways.png'
+            bg: promoTrain
         }
     ];
 
