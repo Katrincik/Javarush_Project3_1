@@ -27,3 +27,6 @@ npm run dev   # open the shown localhost URL
 npm run build
 npm run preview
 ```
+
+## Deploy
+- Live: https://katrincik.github.io/Javarush_Project3_1/
