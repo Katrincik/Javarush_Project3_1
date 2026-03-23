@@ -68,7 +68,7 @@ function SuccessPage() {
                 <Flex vertical gap={8}>
                     <h2 style={{ margin: 0 }}>Traveller Details</h2>
                     {travellerDetails.length === 0 ? (
-                        <Text type="secondary">No traveller details provided.</Text>
+                        <Typography.Text type="secondary">No traveller details provided.</Typography.Text>
                     ) : (
                         <Flex vertical gap={8}>
                             {travellerDetails.map((t, idx) => {
